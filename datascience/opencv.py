@@ -35,7 +35,7 @@ def put_label(
     return image
 
 
-def opencv_image_to_pil_image(image: np.ndarray):
+def opencv_to_pil_image(image: np.ndarray):
     """
     :param image:
         image = cv2.imread("path/to/img.png")
@@ -50,8 +50,17 @@ def opencv_image_to_pil_image(image: np.ndarray):
 def get_fps(video: VideoCapture) -> float:
     return video.get(cv2.CAP_PROP_FPS)
 
-def get_duration(video: VideoCapture) -> float:
+def get_frame_count(video: VideoCapture) -> float:
     return video.get(cv2.CAP_PROP_FRAME_COUNT)
+
+def get_duration(video: VideoCapture) -> float:
+    return get_frame_count(video) / get_fps(video)
+
+def get_frame_size(video: VideoCapture) -> Tuple[float, float]:
+    return (
+        video.get(cv2.CAP_PROP_FRAME_HEIGHT),
+        video.get(cv2.CAP_PROP_FRAME_WIDTH)
+    )
 
 
 class VideoCaptureIter:
